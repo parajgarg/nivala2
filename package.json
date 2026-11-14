@@ -1,0 +1,20 @@
+{
+  "name": "nivala",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nivala restaurant app: guest ordering, virtual queue, crowd ratings, loyalty and a staff screen.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test-mail": "node scripts/test-mail.js"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "nodemailer": "^10.5.0",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.4"
+  }
+}

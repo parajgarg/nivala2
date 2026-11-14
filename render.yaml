@@ -1,0 +1,35 @@
+# Render Blueprint: New > Blueprint > pick this repo. Render reads this file and creates the web service.
+# Values marked "sync: false" are asked for in the dashboard when you create it (they stay secret, never in Git).
+services:
+  - type: web
+    name: nivala
+    runtime: node
+    plan: free                 # free: sleeps after ~15 min idle and resets data on restart. Use "starter" + the disk below to keep data.
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DEMO_MODE
+        value: "true"          # shows "Simulate Instant UPI Webhook" for live demos. Set "false" for real customers.
+      - key: MERCHANT_UPI_ID
+        sync: false            # e.g. yourname@oksbi
+      - key: MERCHANT_NAME
+        sync: false            # name registered with that UPI ID
+      - key: STAFF_PIN
+        sync: false            # first Manager PIN, 4 digits
+      - key: ACCOUNTS_PIN
+        sync: false            # PIN for the Accounts Directory
+      - key: SMTP_USER
+        sync: false            # Gmail address (optional)
+      - key: SMTP_PASS
+        sync: false            # 16-letter Gmail App Password (optional)
+      - key: BANK_ALERT_TOKEN
+        generateValue: true    # random secret for the bank-SMS auto-verify link
+    # To keep orders, accounts and photos across restarts (paid plan only):
+    # disk:
+    #   name: nivala-data
+    #   mountPath: /var/data
+    #   sizeGB: 1
+    # and add an env var  DATA_DIR = /var/data
